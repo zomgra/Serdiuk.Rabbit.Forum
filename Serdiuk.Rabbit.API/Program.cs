@@ -1,11 +1,21 @@
+using Serdiuk.Rabbit.API.Data.Di;
+using Serdiuk.Rabbit.Di;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddElasticSearch(builder.Configuration);
+builder.Services.AddServices();
+builder.Services.AddApplicationDbContext(builder.Configuration);
+builder.Services.AddMapper();
+builder.Services.AddRabbitMq(builder.Configuration);
+builder.Services.AddListener();
 
 var app = builder.Build();
 
